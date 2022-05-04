@@ -1,0 +1,35 @@
+{
+  "name": "book-club-server",
+  "version": "1.0.0",
+  "description": "Server side for the book club app",
+  "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest src --watch",
+    "test:coverage": "jest src --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/biancasimion/book-club-server.git"
+  },
+  "author": "Bianca Simion",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/biancasimion/book-club-server/issues"
+  },
+  "homepage": "https://github.com/biancasimion/book-club-server#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  },
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^28.0.3",
+    "prettier": "^2.6.2"
+  }
+}
