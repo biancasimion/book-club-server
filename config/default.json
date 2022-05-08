@@ -1,0 +1,8 @@
+{
+  "port": "3100",
+  "baseRoute": "/book-club",
+  "googleApiKey": "AIzaSyDdeG0EdySMVRrsNTaSUxyFHvTQLLidAak",
+  "db": {
+    "uri": "mongodb+srv://bianca123:bianca123@cluster0.vfa7r.mongodb.net/bookClub?retryWrites=true&w=majority"
+  }
+}
