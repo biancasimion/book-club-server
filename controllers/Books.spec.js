@@ -1,9 +1,11 @@
 const axios = require('axios');
-// const MockAdapter = require('axios-mock-adapter');
 const booksController = require('./Books');
 const bookMock = require('../mocks/books');
 
 jest.mock('axios');
+jest.mock('config', () => ({
+  get: jest.fn(),
+}));
 
 const resMock = {
   status: jest.fn().mockReturnThis(), send: jest.fn(),
