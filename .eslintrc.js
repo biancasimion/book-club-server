@@ -1,7 +1,8 @@
 module.exports = {
   env: {
-    browser: true,
+    node: true,
     es2021: true,
+    jest: true,
   },
   extends: [
     'airbnb-base',
@@ -9,7 +10,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-  },c
+  },
   rules: {
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
+    indent: ['error', 2],
+    'no-multi-spaces': ['error'],
   },
 };
