@@ -1,4 +1,5 @@
 const express = require('express');
+const bookClubController = require('../controllers/BookClub/BookClub');
 
 const router = express.Router();
 
@@ -20,8 +21,9 @@ router.route('/:id')
     res.send(`Delete book club by id: ${id}`);
   });
 
-router.post('/', (req, res) => {
-  res.send('Creat a bookclub');
-});
+// @route    POST /api/v1/book-club
+// @desc     Create a new book club
+// @access   Public
+router.post('/', bookClubController.addBookClub);
 
 module.exports = router;

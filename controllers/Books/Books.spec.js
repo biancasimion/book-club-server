@@ -1,6 +1,6 @@
 const axios = require('axios');
 const booksController = require('./Books');
-const bookMock = require('../mocks/books');
+const bookMock = require('../../mocks/books');
 
 jest.mock('axios');
 jest.mock('config', () => ({
