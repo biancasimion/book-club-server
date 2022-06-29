@@ -1,4 +1,3 @@
-/* eslint-disable no-multi-assign */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
