@@ -1,7 +1,7 @@
 const axios = require('axios');
 const config = require('config');
 
-const googleBooksUrl = config.get('googleBooksUrl');
+const googleBooksUrl = config.get('googleBookUrl');
 const key = config.get('googleApiKey');
 
 const findBookBySearchTerm = async (req, res) => {

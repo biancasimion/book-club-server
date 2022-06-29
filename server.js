@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const app = express();
 const config = require('config');
 const bookClubRouter = require('./routes/bookClub');
-const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const booksRouter = require('./routes/books');
 const commentsRouter = require('./routes/comments');
@@ -24,6 +23,10 @@ const connectDB = async () => {
 
 connectDB();
 
+// this enables the application to access the data
+// inside req.body
+app.use(express.json({ extended: false }));
+
 const port = process.env.PORT || config.get('port');
 
 function logger(req, res, next) {
@@ -35,7 +38,6 @@ app.use(logger);
 
 app.use('/api/v1/book-club', bookClubRouter);
 app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/comments', commentsRouter);
 app.use('/api/v1/books', booksRouter);
 
