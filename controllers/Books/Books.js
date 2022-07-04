@@ -18,4 +18,17 @@ const findBookBySearchTerm = async (req, res) => {
   }
 };
 
-module.exports = { findBookBySearchTerm };
+const getBookById = async (req, res) => {
+  const { bookId } = req.params;
+
+  try {
+    const result = await axios.get(`${googleBooksUrl}/volumes/${bookId}&key=${key}`);
+    res.status(200);
+    res.send(result.data);
+  } catch (error) {
+    res.status(500);
+    res.send({ error: error.message });
+  }
+};
+
+module.exports = { findBookBySearchTerm, getBookById };
