@@ -45,4 +45,38 @@ describe('Books Controller', () => {
       });
     });
   });
+  describe('getBookById', () => {
+    it('should return a book by id', async () => {
+      const reqMock = {
+        params: {
+          bookId: 'eswAEAAAQBAJ',
+        },
+      };
+      const mockData = { data: bookMock };
+
+      axios.get.mockImplementationOnce(() => Promise.resolve(mockData));
+
+      await booksController.getBookById(reqMock, resMock);
+
+      expect(resMock.status).toHaveBeenCalledWith(200);
+      expect(resMock.send).toHaveBeenCalledWith(bookMock);
+    });
+    describe('when there is an error', () => {
+      it('should return a 500 and an error message', async () => {
+        const errorMessage = 'Internal Server Error';
+        const reqMock = {
+          params: {
+            bookId: 'bookId1234',
+          },
+        };
+
+        axios.get.mockImplementationOnce(() => Promise.reject(new Error(errorMessage)));
+
+        await booksController.getBookById(reqMock, resMock);
+
+        expect(resMock.status).toHaveBeenCalledWith(500);
+        expect(resMock.send).toHaveBeenCalledWith({ error: errorMessage });
+      });
+    });
+  });
 });
