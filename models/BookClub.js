@@ -23,6 +23,10 @@ const BookClubSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const BookClub = mongoose.model('book_club', BookClubSchema);

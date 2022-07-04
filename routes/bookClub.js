@@ -3,9 +3,7 @@ const bookClubController = require('../controllers/BookClub/BookClub');
 
 const router = express.Router();
 
-router.get('/list', (req, res) => {
-  res.send('get all book clubs');
-});
+router.get('/list', bookClubController.getAllBookClubs);
 
 router.route('/:id')
   .get((req, res) => {
