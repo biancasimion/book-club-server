@@ -6,6 +6,7 @@ const bookClubSchema = Joi.object().keys({
   category: Joi.array().items(Joi.string()).required(),
   isPrivate: Joi.boolean(),
   isAdultOnly: Joi.boolean(),
+  date: Joi.date(),
 });
 
 module.exports = bookClubSchema;

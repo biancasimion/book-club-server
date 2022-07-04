@@ -20,4 +20,15 @@ const addBookClub = async (req, res) => {
   }
 };
 
-module.exports = { addBookClub };
+const getAllBookClubs = async (req, res) => {
+  try {
+    const bookClubs = await BookClub.find({}, null, { sort: { date: -1 } });
+    res.status(200);
+    res.send(bookClubs);
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
+
+module.exports = { addBookClub, getAllBookClubs };
