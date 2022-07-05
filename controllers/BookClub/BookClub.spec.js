@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const bookClubController = require('./BookClub');
 const BookClubModel = require('../../models/BookClub');
 
@@ -93,6 +94,9 @@ const mockBookClubs = [
     __v: 0,
   },
 ];
+
+const mockObjectId = new mongoose.Types.ObjectId();
+
 describe('Book Club Controller', () => {
   describe('POST addBookClub', () => {
     beforeEach(() => {
@@ -227,6 +231,45 @@ describe('Book Club Controller', () => {
         BookClubModel.find = jest.fn().mockImplementationOnce(() => Promise.reject(new Error('Internal Server Error')));
 
         await bookClubController.getAllBookClubs(reqMock, resMock);
+
+        expect(resMock.status).toHaveBeenCalledWith(500);
+        expect(resMock.send).toHaveBeenCalledWith({ error: 'Internal Server Error' });
+      });
+    });
+  });
+
+  describe('GET getBookClubById', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      jest.resetAllMocks();
+      BookClubModel.findById = jest.fn().mockResolvedValue(mockBookClubs[0]);
+    });
+    describe('when successful', () => {
+      it('should return a book club', async () => {
+        const reqMock = {
+          params: {
+            id: mockObjectId,
+          },
+        };
+
+        await bookClubController.getBookClubById(reqMock, resMock);
+
+        expect(resMock.status).toHaveBeenCalledWith(200);
+        expect(resMock.send).toHaveBeenCalledWith(mockBookClubs[0]);
+      });
+    });
+
+    describe('when there is an error', () => {
+      it('should return a 500 and an error message', async () => {
+        const reqMock = {
+          params: {
+            id: mockObjectId,
+          },
+        };
+
+        BookClubModel.findById = jest.fn().mockImplementationOnce(() => Promise.reject(new Error('Internal Server Error')));
+
+        await bookClubController.getBookClubById(reqMock, resMock);
 
         expect(resMock.status).toHaveBeenCalledWith(500);
         expect(resMock.send).toHaveBeenCalledWith({ error: 'Internal Server Error' });

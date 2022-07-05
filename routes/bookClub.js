@@ -6,10 +6,7 @@ const router = express.Router();
 router.get('/list', bookClubController.getAllBookClubs);
 
 router.route('/:id')
-  .get((req, res) => {
-    const { id } = req.params;
-    res.send(`Get book club by id: ${id}`);
-  })
+  .get(bookClubController.getBookClubById)
   .put((req, res) => {
     const { id } = req.params;
     res.send(`Update book club by id: ${id}`);
