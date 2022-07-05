@@ -250,7 +250,7 @@ describe('Book Club Controller', () => {
       BookClubModel.findById = jest.fn().mockResolvedValue(mockBookClubs[0]);
     });
     describe('when successful', () => {
-      it('should return the edited book club', async () => {
+      it('should return a book club', async () => {
         const reqMock = {
           params: {
             id: mockObjectId,
@@ -303,7 +303,7 @@ describe('Book Club Controller', () => {
     });
 
     describe('when successful', () => {
-      it('should return a book club', async () => {
+      it('should return the edited book club', async () => {
         const reqMock = {
           params: {
             id: mockObjectId,
@@ -322,7 +322,7 @@ describe('Book Club Controller', () => {
       });
     });
 
-    describe('when no date is sent to be edited', () => {
+    describe('when no data is sent to be edited', () => {
       it('should return a 404 and an error message', async () => {
         const reqMock = {
           params: {
