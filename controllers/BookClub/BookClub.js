@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const BookClub = require('../../models/BookClub');
 const bookClubValidate = require('../../helpers/bookClubValidate');
 
@@ -31,4 +32,16 @@ const getAllBookClubs = async (req, res) => {
   }
 };
 
-module.exports = { addBookClub, getAllBookClubs };
+const getBookClubById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const bookClub = await BookClub.findById(id);
+    res.status(200);
+    res.send(bookClub);
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
+
+module.exports = { addBookClub, getAllBookClubs, getBookClubById };
