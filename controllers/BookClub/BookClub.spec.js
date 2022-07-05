@@ -103,6 +103,7 @@ describe('Book Club Controller', () => {
       jest.clearAllMocks();
       jest.resetAllMocks();
     });
+
     describe('when successful', () => {
       it('should return the book club data', async () => {
         jest.spyOn(BookClubModel.prototype, 'save')
@@ -145,6 +146,7 @@ describe('Book Club Controller', () => {
         expect(resMock.send).toHaveBeenCalledWith({ error: '"name" is required' });
       });
     });
+
     describe('when description is missing', () => {
       it('should return a 400 and an error message', async () => {
         jest.spyOn(BookClubModel.prototype, 'save')
@@ -165,6 +167,7 @@ describe('Book Club Controller', () => {
         expect(resMock.send).toHaveBeenCalledWith({ error: '"description" is required' });
       });
     });
+
     describe('when category is missing', () => {
       it('should return a 400 and an error message', async () => {
         jest.spyOn(BookClubModel.prototype, 'save')
@@ -186,6 +189,7 @@ describe('Book Club Controller', () => {
         expect(resMock.send).toHaveBeenCalledWith({ error: '"category" is required' });
       });
     });
+
     describe('when there is an error', () => {
       it('should return a 500 and an error message', async () => {
         jest.spyOn(BookClubModel.prototype, 'save')
@@ -207,6 +211,7 @@ describe('Book Club Controller', () => {
       });
     });
   });
+
   describe('GET getAllBookClubs', () => {
     beforeEach(() => {
       jest.clearAllMocks();
@@ -270,6 +275,86 @@ describe('Book Club Controller', () => {
         BookClubModel.findById = jest.fn().mockImplementationOnce(() => Promise.reject(new Error('Internal Server Error')));
 
         await bookClubController.getBookClubById(reqMock, resMock);
+
+        expect(resMock.status).toHaveBeenCalledWith(500);
+        expect(resMock.send).toHaveBeenCalledWith({ error: 'Internal Server Error' });
+      });
+    });
+  });
+
+  describe('PUT editBookClubById', () => {
+    const mockedEditedBookClub = {
+      _id: '62c34a8813efd413188fa890',
+      name: 'Hi',
+      description: 'Classics books',
+      category: [
+        'classics',
+      ],
+      isPrivate: false,
+      isAdultOnly: false,
+      __v: 0,
+      date: '2022-07-05T09:19:26.989Z',
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      jest.resetAllMocks();
+      BookClubModel.findByIdAndUpdate = jest.fn().mockResolvedValue(mockedEditedBookClub);
+    });
+
+    describe('when successful', () => {
+      it('should return the edited book club', async () => {
+        const reqMock = {
+          params: {
+            id: mockObjectId,
+          },
+          body: {
+            data: {
+              name: 'hi',
+            },
+          },
+        };
+
+        await bookClubController.editBookClubById(reqMock, resMock);
+
+        expect(resMock.status).toHaveBeenCalledWith(200);
+        expect(resMock.send).toHaveBeenCalledWith(mockedEditedBookClub);
+      });
+    });
+
+    describe('when no data is sent to be edited', () => {
+      it('should return a 404 and an error message', async () => {
+        const reqMock = {
+          params: {
+            id: mockObjectId,
+          },
+          body: {},
+        };
+        BookClubModel.findByIdAndUpdate = jest.fn().mockImplementationOnce(() => Promise.reject(new Error('Error')));
+
+        await bookClubController.editBookClubById(reqMock, resMock);
+
+        expect(resMock.status).toHaveBeenCalledWith(404);
+        expect(resMock.send).toHaveBeenCalledWith('There is no book club to edit');
+      });
+    });
+
+    describe('when there is an error', () => {
+      it('should return a 500 and an error message', async () => {
+        const reqMock = {
+          params: {
+            id: mockObjectId,
+          },
+          body: {
+            data: {
+              name: 'hi',
+            },
+          },
+        };
+
+        BookClubModel.findByIdAndUpdate = jest.fn().mockImplementationOnce(() => Promise.reject(new Error('Internal Server Error')));
+
+        await bookClubController.editBookClubById(reqMock, resMock);
 
         expect(resMock.status).toHaveBeenCalledWith(500);
         expect(resMock.send).toHaveBeenCalledWith({ error: 'Internal Server Error' });

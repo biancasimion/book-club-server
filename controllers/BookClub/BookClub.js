@@ -44,4 +44,25 @@ const getBookClubById = async (req, res) => {
   }
 };
 
-module.exports = { addBookClub, getAllBookClubs, getBookClubById };
+const editBookClubById = async (req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+
+  if (!data) {
+    res.status(404);
+    res.send('There is no book club to edit');
+    return;
+  }
+  try {
+    const bookClub = await BookClub.findByIdAndUpdate(id, { ...data }, { new: true });
+    res.status(200);
+    res.send(bookClub);
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
+
+module.exports = {
+  addBookClub, getAllBookClubs, getBookClubById, editBookClubById,
+};
