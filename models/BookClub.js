@@ -27,6 +27,9 @@ const BookClubSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  members: {
+    type: Number,
+  },
 });
 
 const BookClub = mongoose.model('book_club', BookClubSchema);
