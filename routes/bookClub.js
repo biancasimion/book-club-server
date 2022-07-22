@@ -18,6 +18,6 @@ router.route('/:id')
 // @access   Public
 router.post('/', bookClubController.addBookClub);
 
-router.put('/join/:id', bookClubController.joinBookClubById);
+router.patch('/join/:id', bookClubController.joinBookClubById);
 
 module.exports = router;

@@ -362,7 +362,7 @@ describe('Book Club Controller', () => {
     });
   });
 
-  describe('PUT joinBookClubById', () => {
+  describe('PATCH joinBookClubById', () => {
     const mockedEditedBookClub = {
       _id: '62c34a8813efd413188fa890',
       name: 'Hi',
