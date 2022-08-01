@@ -8,6 +8,7 @@ const bookClubSchema = Joi.object().keys({
   isAdultOnly: Joi.boolean(),
   date: Joi.date(),
   members: Joi.number(),
+  commentId: Joi.string(),
 });
 
 module.exports = bookClubSchema;

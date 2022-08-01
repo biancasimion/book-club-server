@@ -30,6 +30,10 @@ const BookClubSchema = new Schema({
   members: {
     type: Number,
   },
+  commentId: {
+    type: Schema.Types.ObjectId,
+    ref: 'comments',
+  },
 });
 
 const BookClub = mongoose.model('book_club', BookClubSchema);
