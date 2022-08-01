@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const BookClub = require('../../models/BookClub');
+const Comments = require('../../models/Comments');
 const bookClubValidate = require('../../helpers/bookClubValidate');
 
 const addBookClub = async (req, res) => {
@@ -24,6 +25,7 @@ const addBookClub = async (req, res) => {
 const getAllBookClubs = async (req, res) => {
   try {
     const bookClubs = await BookClub.find({}, null, { sort: { date: -1 } });
+
     res.status(200);
     res.send(bookClubs);
   } catch (err) {
@@ -36,6 +38,15 @@ const getBookClubById = async (req, res) => {
   const { id } = req.params;
   try {
     const bookClub = await BookClub.findById(id);
+    if (bookClub.commentId) {
+      const comments = await Comments.findById(bookClub.commentId);
+      res.status(200);
+      res.send({
+        ...bookClub._doc,
+        commentsData: { ...comments._doc },
+      });
+      return;
+    }
     res.status(200);
     res.send(bookClub);
   } catch (err) {
@@ -55,6 +66,16 @@ const editBookClubById = async (req, res) => {
   }
   try {
     const bookClub = await BookClub.findByIdAndUpdate(id, { ...data }, { new: true });
+
+    if (bookClub.commentId) {
+      const comments = await Comments.findById(bookClub.commentId);
+      res.status(200);
+      res.send({
+        ...bookClub._doc,
+        commentsData: { ...comments._doc },
+      });
+      return;
+    }
     res.status(200);
     res.send(bookClub);
   } catch (err) {
@@ -74,6 +95,15 @@ const joinBookClubById = async (req, res) => {
       { new: true },
     );
 
+    if (bookClub.commentId) {
+      const comments = await Comments.findById(bookClub.commentId);
+      res.status(200);
+      res.send({
+        ...bookClub._doc,
+        commentsData: { ...comments._doc },
+      });
+      return;
+    }
     res.status(200);
     res.send(bookClub);
   } catch (err) {
