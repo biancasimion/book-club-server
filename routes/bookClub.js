@@ -4,6 +4,7 @@ const bookClubController = require('../controllers/BookClub/BookClub');
 const router = express.Router();
 
 router.get('/list', bookClubController.getAllBookClubs);
+router.get('/search/:q?', bookClubController.findBookClubBySearchTerm);
 
 router.route('/:id')
   .get(bookClubController.getBookClubById)
