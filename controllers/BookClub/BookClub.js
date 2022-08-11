@@ -112,10 +112,24 @@ const joinBookClubById = async (req, res) => {
   }
 };
 
+const findBookClubBySearchTerm = async (req, res) => {
+  const searchTerm = req.query.q;
+
+  try {
+    const matchingResults = await BookClub.find({ name: { $regex: searchTerm, $options: 'i' } });
+    res.status(200);
+    res.send(matchingResults);
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
+
 module.exports = {
   addBookClub,
   getAllBookClubs,
   getBookClubById,
   editBookClubById,
   joinBookClubById,
+  findBookClubBySearchTerm,
 };
