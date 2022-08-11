@@ -47,8 +47,7 @@ const addComment = async (req, res) => {
     });
     await newComment.save();
     const bookClub = await BookClub.findByIdAndUpdate({ _id: bookClubId }, {
-      bookClubId,
-      comments: newComment._id,
+      commentId: newComment._id,
     }, { new: true });
 
     res.status(200);
