@@ -1,10 +1,9 @@
 const express = require('express');
+const User = require('../controllers/User/User');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Get users list');
-});
+router.get('/', User.GenerateUsername);
 
 router.delete('/:id', (req, res) => {
   res.send(`Delete user by ID: ${req.params.id}`);

@@ -47,7 +47,7 @@ function logger(req, res, next) {
 app.use(logger);
 
 app.use('/api/v1/book-club', bookClubRouter);
-app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/user', usersRouter);
 app.use('/api/v1/comments', commentsRouter);
 app.use('/api/v1/books', booksRouter);
 
