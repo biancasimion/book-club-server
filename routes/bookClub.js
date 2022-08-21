@@ -9,10 +9,7 @@ router.get('/search/:q?', bookClubController.findBookClubBySearchTerm);
 router.route('/:id')
   .get(bookClubController.getBookClubById)
   .put(bookClubController.editBookClubById)
-  .delete((req, res) => {
-    const { id } = req.params;
-    res.send(`Delete book club by id: ${id}`);
-  });
+  .delete(bookClubController.deleteBookClubById);
 
 // @route    POST /api/v1/book-club
 // @desc     Create a new book club

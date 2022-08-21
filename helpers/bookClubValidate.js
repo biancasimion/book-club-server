@@ -9,6 +9,7 @@ const bookClubSchema = Joi.object().keys({
   date: Joi.date(),
   members: Joi.number(),
   commentId: Joi.string(),
+  deleted: Joi.boolean(),
 });
 
 module.exports = bookClubSchema;

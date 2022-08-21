@@ -34,6 +34,10 @@ const BookClubSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'comments',
   },
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const BookClub = mongoose.model('book_club', BookClubSchema);
