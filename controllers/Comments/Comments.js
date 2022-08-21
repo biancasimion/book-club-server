@@ -1,4 +1,6 @@
 /* eslint-disable no-underscore-dangle */
+const mongoose = require('mongoose');
+
 const Comments = require('../../models/Comments');
 const commentsValidate = require('../../helpers/commentsValidate');
 const BookClub = require('../../models/BookClub');
@@ -58,6 +60,59 @@ const addComment = async (req, res) => {
   }
 };
 
+const editCommentById = async (req, res) => {
+  const { id } = req.params;
+  const { data, _id } = req.body;
+
+  if (!data) {
+    res.status(404);
+    res.send('There is no comment to edit');
+    return;
+  }
+
+  try {
+    // find the matching comments
+    const comments = await Comments.findOne({
+      _id,
+      comments: { $elemMatch: { _id: new mongoose.Types.ObjectId(id) } }, // must be ObjectId
+    });
+
+    // find the index at whitch the comment to be updated is at
+    let indexOfComment;
+    comments.comments.find((item, index) => {
+      if (item._id.toString() === id) {
+        indexOfComment = index;
+        return index;
+      }
+      return null;
+    });
+
+    // if no comment is found return error
+    if (!indexOfComment) {
+      res.status(404);
+      res.send('There is no comment to edit');
+      return;
+    }
+
+    const indexToUpdate = `comments.${indexOfComment}`;
+    const updatedComment = (await Comments.findOneAndUpdate(
+      {
+        _id,
+        comments: { $elemMatch: { _id: new mongoose.Types.ObjectId(id) } }, // must be ObjectId
+      },
+      { [indexToUpdate]: { ...data } },
+      { new: true },
+    ));
+
+    res.status(200);
+    res.send(updatedComment);
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
+
 module.exports = {
   addComment,
+  editCommentById,
 };
