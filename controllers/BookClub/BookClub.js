@@ -26,8 +26,16 @@ const getAllBookClubs = async (req, res) => {
   try {
     const bookClubs = await BookClub.find({}, null, { sort: { date: -1 } });
 
+    // return only the book clubs that have deleted = false
+    const nonDeleteBookClubs = bookClubs.filter((club) => {
+      if (!club.deleted) {
+        return club;
+      }
+      return null;
+    });
+
     res.status(200);
-    res.send(bookClubs);
+    res.send(nonDeleteBookClubs);
   } catch (err) {
     res.status(500);
     res.send({ error: err.message });
@@ -125,6 +133,20 @@ const findBookClubBySearchTerm = async (req, res) => {
   }
 };
 
+const deleteBookClubById = async (req, res) => {
+  const { id } = req.params;
+  const data = { deleted: true };
+  try {
+    await BookClub.findByIdAndUpdate(id, { ...data });
+
+    res.status(200);
+    res.send({ messgae: 'success' });
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
+
 module.exports = {
   addBookClub,
   getAllBookClubs,
@@ -132,4 +154,5 @@ module.exports = {
   editBookClubById,
   joinBookClubById,
   findBookClubBySearchTerm,
+  deleteBookClubById,
 };
