@@ -11,9 +11,6 @@ router.post('/', commentsController.addComment);
 
 router.route('/:id')
   .put(commentsController.editCommentById)
-  .delete((req, res) => {
-    const { id } = req.params;
-    res.send(`Delete comment by id: ${id}`);
-  });
+  .delete(commentsController.editCommentById);
 
 module.exports = router;
