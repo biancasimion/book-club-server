@@ -140,7 +140,7 @@ const deleteBookClubById = async (req, res) => {
     await BookClub.findByIdAndUpdate(id, { ...data });
 
     res.status(200);
-    res.send({ messgae: 'success' });
+    res.send({ message: 'success' });
   } catch (err) {
     res.status(500);
     res.send({ error: err.message });
